@@ -44,8 +44,7 @@ const nysdotAgencyRE = /^NYSDOT \/ /;
 const pageResultsDir = join(testResultsDir, 'transit-admin-511');
 const downloadsDir = join(
   pageResultsDir,
-  'downloads',
-  `${Math.round(Date.now() / 1000)}`,
+  `transit-admin.511ny.public-gtfs-scrape.${Math.floor(Date.now() / 1000)}`,
 );
 
 mkdirSync(downloadsDir, { recursive: true });
@@ -230,11 +229,7 @@ async function scrapeGtfs(
     await button?.click();
 
     await new Promise<void>((resolve) => {
-      const watcher = watch(agencyDownloadDir, (eventType, filename) => {
-        if (eventType !== 'change') {
-          console.log(JSON.stringify({ eventType, filename }, null, 4));
-        }
-
+      const watcher = watch(agencyDownloadDir, (_eventType, filename) => {
         // Until download complete, file matches /.zip.crdownload$/
         if (/.zip$/.test(filename)) {
           watcher.close();
