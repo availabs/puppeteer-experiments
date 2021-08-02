@@ -96,6 +96,7 @@ async function login(page: Page) {
   writeFileSync(sessionStoragePath, sessionStorage);
 }
 
+// https://stackoverflow.com/a/53018102/3970755
 async function logNetworkActivity(page: Page) {
   const writer = createWriteStream(
     join(
